@@ -60,11 +60,13 @@
         let lista = new Proxy(new ListaNegociacoes(),  {
             
             get: function(target, prop, receiver) {
-                if(['adiciona', "esvazia"].includes(prop) && typeof(target[prop] == typeof(Function)) {
+
+                if(['adiciona', 'esvazia' ].includes(prop) && typeof(target[prop]) == typeof(Function)) {
                     
                     return function(){
 
                         console.log(` interceptando ${prop}`);
+                        Reflect.apply(target[prop], target, arguments);
                     }
 
                 }
