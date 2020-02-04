@@ -61,7 +61,7 @@
             
             get: function(target, prop, receiver) {
 
-                if(['adiciona', 'esvazia' ].includes(prop) && typeof(target[prop]) == typeof(Function)) {
+                if(['adiciona', 'esvazia'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
                     
                     return function(){
 
@@ -69,12 +69,12 @@
                         Reflect.apply(target[prop], target, arguments);
                     }
 
-                }
+
 
                 return Reflect.set(target, prop, receiver);
 
             }
-
+        }
         });
         
         lista.adiciona(new Negociacao(new Date(), 1,100));
