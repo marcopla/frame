@@ -27,19 +27,44 @@ class NegociacaoController {
     }
 
     importaNegociacoes(){
+        
         let service = new NegociacaoServices();
-        service.ObterNegociacoesDaSemana( (erro, negociacoes) =>{
-            if(erro){
-                this._mensagem.texto = erro;
-                return;
-            }
 
-            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+        Promise.all([
+            service.ObterNegociacoesDaSemana(),
+            service.ObterNegociacoesDaSemanaAnterior(),
+            service.ObterNegociacoesDaSemanaRetrasada()]
+        ).then( negociacoes => {
+            negociacoes
+                .reduce((arrayAchatado, array) => arrayAchatado.concat(array), (array), [])
+                .forEach(negociacao => this._listaNegociacoes.adciona(negociacao));
             this._mensagem.texto = 'Negociações importadas com sucesso.';
-
-            });
+        
+        }).catch(error => this._mensagem.texto = error);
     }
+        /*
+        service.ObterNegociacoesDaSemana()
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociação da semana obtida com sucesso.';
+            })
+            .catch(erro => this._mensagem.texto = erro);
 
+        service.ObterNegociacoesDaSemanaAnterior()
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociação da semana obtida com sucesso.';
+            })
+            .catch(erro => this._mensagem.texto = erro);
+        
+        service.ObterNegociacoesDaSemanaRetrasada()
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociação da semana obtida com sucesso.';
+            })
+            .catch(erro => this._mensagem.texto = erro);
+    }
+    */
     adiciona(event) {
 
         event.preventDefault();
