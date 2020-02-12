@@ -6,7 +6,7 @@ class NegociacaoServices {
 
             let xhr = new XMLHttpRequest();
     
-            xhr.open('GET', 'negociacoes/anterior');
+            xhr.open('GET', 'negociacoes/semanaX');
 
             xhr.onreadystatechange = () => {
     
@@ -19,7 +19,7 @@ class NegociacaoServices {
                         
                     } else {
                         console.log(xhr.responseText);
-                        reject('Não foi possível obter as negociações');
+                        reject('Não foi possível obter as negociações da semana.');
                           
                     }
     
@@ -52,7 +52,7 @@ class NegociacaoServices {
                         
                     } else {
                         console.log(xhr.responseText);
-                        reject('Não foi possível obter as negociações');
+                        reject('Não foi possível obter as negociações da semana anterior.');
                           
                     }
     
@@ -73,7 +73,7 @@ class NegociacaoServices {
 
             let xhr = new XMLHttpRequest();
     
-            xhr.open('GET', 'negociacoes/anterior');
+            xhr.open('GET', 'negociacoes/retrasada');
 
             xhr.onreadystatechange = () => {
     
@@ -86,7 +86,7 @@ class NegociacaoServices {
                         
                     } else {
                         console.log(xhr.responseText);
-                        reject('Não foi possível obter as negociações');
+                        reject('Não foi possível obter as negociações retrasada.');
                           
                     }
     

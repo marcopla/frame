@@ -36,8 +36,8 @@ class NegociacaoController {
             service.ObterNegociacoesDaSemanaRetrasada()]
         ).then( negociacoes => {
             negociacoes
-                .reduce((arrayAchatado, array) => arrayAchatado.concat(array), (array), [])
-                .forEach(negociacao => this._listaNegociacoes.adciona(negociacao));
+                .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
             this._mensagem.texto = 'Negociações importadas com sucesso.';
         
         }).catch(error => this._mensagem.texto = error);
