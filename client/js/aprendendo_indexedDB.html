@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning IdexedDB</title>
+</head>
+<body>
+    <script>
+        var openRequest = window.indexedDB.open("frame", 1);
+
+        openRequest.onupgradeneeded = event => {
+
+            console.log('Cria ou altera um banco já existente.');
+        }
+
+        openRequest.onsuccess = event => {
+
+            console.log('Conexão obtida com sucesso.');
+        }
+
+        openRequest.onerror = event => {
+
+            console.log(event.target.error);
+        }
+    </script>
+    
+</body>
+</html>
