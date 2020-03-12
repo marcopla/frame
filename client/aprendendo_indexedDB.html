@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet">
     <title>Learning IdexedDB</title>
 </head>
 <body>
     <script>
-        
         var openRequest = window.indexedDB.open("frame", 1);
 
         openRequest.onupgradeneeded = event => {
@@ -24,7 +24,7 @@
 
             console.log(event.target.error);
         }
-        
+
     </script>  
 </body>
 </html>
