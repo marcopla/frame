@@ -24,7 +24,7 @@
                 minhaConnection.deleteObjectStore('negociacoes');
             }
                 minhaConnection.createObjectStore('negociacoes', {autoIncremet: true});            
-        };
+        }
 
         openRequest.onsuccess = event => {
 
@@ -51,12 +51,12 @@
             request.onsuccess = event => {
 
                 console.log('Negociacao incluida com sucesso.');
-            };
+            }  
 
             request.onerror = event =>
                 console.log(e.target.error);
         
-            };
+            }
 
     </script>  
 </body>
