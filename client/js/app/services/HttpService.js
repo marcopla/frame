@@ -28,6 +28,6 @@ class HttpService {
     
             xhr.send();
 
-        })
+        });
     }
 }

@@ -23,24 +23,25 @@
             if(minhaConnection.objectStoreNames.contains('negociacoes')) {
                 minhaConnection.deleteObjectStore('negociacoes');
             }
-                minhaConnection.createObjectStore('negociacoes', {autoIncremet: true});            
-        }
+            
+            minhaConnection.createObjectStore('negociacoes', {autoIncremet: true});            
+        };
 
         openRequest.onsuccess = event => {
 
             console.log('Conexão obtida com sucesso.');
             
             connection = event.target.result;
-        }
+        };
 
         openRequest.onerror = event => {
 
             console.log(event.target.error);
-        }
+        };
 
         function adiciona() {
             
-            let transaction = connection.transaction(['negociaco    es'], 'readwrite');
+            let transaction = connection.transaction(['negociacoes'], 'readwrite');
            
             let store = transaction.objectStore('negociacoes');
             
@@ -54,9 +55,9 @@
             }  
 
             request.onerror = event =>
-                console.log(e.target.error);
+                console.log(event.target.error);
         
-            }
+        }
 
     </script>  
 </body>
