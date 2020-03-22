@@ -7,12 +7,12 @@
     <title>Learning IdexedDB</title>
 </head>
 <body>
-    <script scr="../js/app/models/Negociacao.js"></script>
+    <script src="/js/app/models/Negociacao.js"></script>
     <script>
 
         var connection;
 
-        var openRequest = window.indexedDB.open("frame", 3);
+        var openRequest = window.indexedDB.open("frame", 4);
 
         openRequest.onupgradeneeded = event => {
 
@@ -24,7 +24,7 @@
                 minhaConnection.deleteObjectStore('negociacoes');
             }
             
-            minhaConnection.createObjectStore('negociacoes', {autoIncremet: true});            
+            minhaConnection.createObjectStore('negociacoes', {autoIncrement: true});            
         };
 
         openRequest.onsuccess = event => {
@@ -47,7 +47,7 @@
             
             let negociacao = new Negociacao(new Date(), 1, 200);
 
-            let request  = store.add(negociacao);
+            let request = store.add(negociacao);
 
             request.onsuccess = event => {
 
