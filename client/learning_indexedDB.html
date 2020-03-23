@@ -65,19 +65,36 @@
 
             let store = transaction.objectStore('negociacoes');
 
-            let cursor = store.opeCursor();
+            let cursor = store.openCursor();
 
             let negociacoes = [];
 
             cursor.onsuccess = event => {
+                
+                let atual = event.target.result;
+                    
+                    if(atual){
 
-            }
+                        let dado = atual.value;
+
+                        negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
+
+                        atual.continue();
+
+                } else {
+
+                    console.log(negociacoes);
+
+                }
+            
+            };
 
             cursor.onerror = event => {
 
-            }
-        }
+                console.log(event.target.error.name);
 
-    </script>  
+            };
+        }
+   </script> 
 </body>
 </html>
