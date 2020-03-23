@@ -1,7 +1,0 @@
-class IndexDb {
-
-    constructor (name){
-
-    }
-
-}
