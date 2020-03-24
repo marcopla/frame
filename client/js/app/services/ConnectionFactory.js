@@ -1,52 +1,58 @@
-var store = ['negociacoes'];
-var version = 4;
-var dbName = 'frame'
+var ConnectionFactory = (function () {
 
-class ConnectionFactory {
+    var store = ['negociacoes'];
+    var version = 4;
+    var dbName = 'frame'
+    var connection = null;
 
-    constructor() {
-        
-        throw new Error('Não é possível criar instâncias de ConnectionFactory');
-        
-    }
+        return class ConnectionFactory {
 
-    static getConnection(){
-
-        return new Promise((resolve, reject) =>{
-
-            let openRequest = window.indexedDB.open( dbName, version);
-
-            openRequest.onupgradeneeded = e => {
-
-                ConnectionFactory._createStores(e.target.result);
+            constructor() {
                 
-            };
-            
-            openRequest.onsuccess = e => {
+                throw new Error('Não é possível criar instâncias de ConnectionFactory');
+                
+            }
 
-                resolve(e.target.result);
-            
-            };
-        
-            openRequest.onerror = e => {
+            static getConnection(){
 
-                console.log(e.target.error);
+                return new Promise((resolve, reject) => {
 
-                reject(e.target.error.name);
+                    let openRequest = window.indexedDB.open( dbName, version);
+
+                    openRequest.onupgradeneeded = e => {
+
+                        ConnectionFactory._createStores(e.target.result);
+                        
+                    };
+                    
+                    openRequest.onsuccess = e => {
+                        
+                        if(!connection) connection = e.target.result;
+
+                        resolve(connection);
+                    
+                    };
+                
+                    openRequest.onerror = e => {
+
+                        console.log(e.target.error);
+
+                        reject(e.target.error.name);
+                    
+                    };
+                
+                });
+            }
             
-            };
-        
-        });
-    }
-    
-    static _createStores(connetion) {
-        
-        stores.forEach(store =>{
-            
-            if(connection.objectStoreNames.contains(store)) 
-                connection.deleteObjectStore(store);
-        
-                connection.createObjectStore(store, {autoIncrement: true});
-        });
-    }
-}
+            static _createStores(connection) {
+                
+                stores.forEach(store =>{
+                    
+                    if(connection.objectStoreNames.contains(store)) 
+                        connection.deleteObjectStore(store);
+                
+                        connection.createObjectStore(store, {autoIncrement: true});
+                });
+            }
+        }
+})();
