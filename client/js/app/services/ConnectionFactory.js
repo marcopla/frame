@@ -18,18 +18,29 @@ class ConnectionFactory {
 
             openRequest.onupgradeneeded = e => {
 
+                
             };
-
+            
+        
             openRequest.onsuccess = e => {
-
+            
             };
-
+        
             openRequest.onerror = e => {
-
-
+            
             };
-
-
+        
         });
+    }
+    
+    static _createStores(connetion) {
+        
+        stores.forEach(store =>{
+            
+            if(connection.objectStoreNames.contains(store)) 
+                connection.deleteObjectStore(store);
+        
+                connection.createObjectStore(store, {autoIncrement: true});
+        }
     }
 }
