@@ -1,7 +1,6 @@
 class NegociacaoController {
 
     constructor (){
-
         let $ = document.querySelector.bind(document);
 
         this._inputData = $('#data');
@@ -33,14 +32,14 @@ class NegociacaoController {
         Promise.all([
             service.ObterNegociacoesDaSemana(),
             service.ObterNegociacoesDaSemanaAnterior(),
-            service.ObterNegociacoesDaSemanaRetrasada()]
-        ).then( negociacoes => {
-            negociacoes
-                .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
-                .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-            this._mensagem.texto = 'Negociações importadas com sucesso.';
-        
-        }).catch(error => this._mensagem.texto = error);
+            service.ObterNegociacoesDaSemanaRetrasada()
+        ]).then( negociacoes => { 
+                negociacoes
+                    .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                    .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            
+                this._mensagem.texto = 'Negociações importadas com sucesso.';
+            }).catch(error => this._mensagem.texto = error);
     }
         /*
         service.ObterNegociacoesDaSemana()
@@ -66,15 +65,26 @@ class NegociacaoController {
     }
     */
     adiciona(event) {
-
         event.preventDefault();
-        this._listaNegociacoes.adiciona(this._criaNegociacao());
-        this._mensagem.texto = 'Negociação realizada com sucesso.';
-        this._limpaFormulario();
+        ConnectionFactory
+            .getConnection()
+            .then(connection => {
+                let negociacao = this._criaNegociacao();
+                new NegociacaoDao(connection)
+                    .adiciona(negociacao);
+            });
+
+        
+        try{
+            this._listaNegociacoes.adiciona(this._criaNegociacao());
+            this._mensagem.texto = 'Negociação realizada com sucesso.';
+            this._limpaFormulario();
+        } catch(erro){
+            this._mensagem.texto = erro
+        } 
     }
 
     _criaNegociacao (){
-
         return new Negociacao(
             DateHelper.textoParaData(this._inputData.value),
             this._inputQuantidade.value,
@@ -83,11 +93,9 @@ class NegociacaoController {
     }
 
     _limpaFormulario(){
-
         this._inputData.value = '';
         this._inputQuantidade.value = 1;
-        this._inputValor.value = 0.0;
-        
+        this._inputValor.value = 0.0; 
         this._inputData.focus();
     }
 }

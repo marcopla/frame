@@ -3,6 +3,7 @@ var ConnectionFactory = (function () {
     const stores = ['negociacoes'];
     const version = 4;
     const dbName = 'frame'
+    
     var connection = null;
     var close = null;
 
