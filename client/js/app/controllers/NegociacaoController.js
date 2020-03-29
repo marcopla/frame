@@ -29,7 +29,7 @@ class NegociacaoController {
 
                         this._listaNegociacoes.adiciona(negocicao);
                     }
-                };);
+                });
             
     }
 
