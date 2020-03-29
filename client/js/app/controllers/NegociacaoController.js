@@ -10,12 +10,27 @@ class NegociacaoController {
         this._listaNegociacoes = new Bind(
             new ListaNegociacoes(),
             new NegociacoesView($('#negociacoesView')),
-            'adiciona', 'esvazia');
+            'adiciona', 'esvazia', 'ordena', 'inverteOrdem)');
         
         this._mensagem = new Bind(
             new Mensagem(),
             new MensagemView($('#mensagemView')),
             'texto');
+
+            let this._ordemAtual = '';
+
+            ConnectionFatory
+                .getConnection()
+                .then(connection =>{
+
+                    new NegociacaoDao(connection)  
+                    .listaTodos()
+                    .then(negociacoes => {
+
+                        this._listaNegociacoes.adiciona(negocicao);
+                    }
+                };);
+            
     }
 
     apaga(){
@@ -71,7 +86,7 @@ class NegociacaoController {
 
         ConnectionFactory
             .getConnection()
-            .then(connection => {
+            .(connection => {
                 
                 let negociacao = this._criaNegociacao();
                 

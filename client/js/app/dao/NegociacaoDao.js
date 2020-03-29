@@ -28,4 +28,30 @@ class NegociacaoDao {
 
         });
     }
+
+    listaTodos(){
+        return new Promisse((resolve, reject) => {
+
+            let cursor = this._connection
+                .transaction([this.store], 'readwrite')
+                .objectStore(this.store)
+                .openCursor();
+                
+                cursor.onsuccess = event => {
+
+                    
+                    let atual = event.target.result;
+                    
+                    if(atual){   
+                    
+                    }
+                };
+                cursor.onerror = event => {
+
+                    console.log(event.target.error.name);
+    
+                };
+
+        };
+    }
 }
