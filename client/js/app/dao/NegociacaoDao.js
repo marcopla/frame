@@ -30,28 +30,40 @@ class NegociacaoDao {
     }
 
     listaTodos(){
-        return new Promisse((resolve, reject) => {
+
+        return new Promise((resolve, reject) => {
 
             let cursor = this._connection
-                .transaction([this.store], 'readwrite')
-                .objectStore(this.store)
+                .transaction([this._store], 'readwrite')
+                .objectStore(this._store)
                 .openCursor();
                 
-                cursor.onsuccess = event => {
+            let negociacoes = [];
 
-                    
-                    let atual = event.target.result;
-                    
-                    if(atual){   
-                    
-                    }
-                };
-                cursor.onerror = event => {
+            cursor.onsuccess = event => {
 
-                    console.log(event.target.error.name);
-    
-                };
+                let atual = event.target.result;
+                
+                if(atual){   
+                    
+                    let dado = atual.value;
+                    
+                    negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
 
-        };
+                    atual.continue();
+
+                } else {
+                    resolve(negociacoes);
+                }
+            };
+                
+            cursor.onerror = event => {
+
+                console.log(event.target.error);
+                reject('Não foi possível listar as negociações');
+
+            };
+
+        });
     }
 }

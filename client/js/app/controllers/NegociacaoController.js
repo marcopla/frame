@@ -17,18 +17,20 @@ class NegociacaoController {
             new MensagemView($('#mensagemView')),
             'texto');
 
-            let this._ordemAtual = '';
+            this._ordemAtual = '';
 
-            ConnectionFatory
+            ConnectionFactory
                 .getConnection()
-                .then(connection =>{
+                .then(connection => {
 
                     new NegociacaoDao(connection)  
                     .listaTodos()
                     .then(negociacoes => {
+                            negociacoes.forEach(negociacao => {
+                                this._listaNegociacoes.adiciona(negociacao);
+                            })
 
-                        this._listaNegociacoes.adiciona(negocicao);
-                    }
+                    });
                 });
             
     }
@@ -86,7 +88,7 @@ class NegociacaoController {
 
         ConnectionFactory
             .getConnection()
-            .(connection => {
+            .then(connection => {
                 
                 let negociacao = this._criaNegociacao();
                 
