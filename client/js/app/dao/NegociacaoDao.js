@@ -66,4 +66,10 @@ class NegociacaoDao {
 
         });
     }
+
+    apagaTodos() {
+            return new Promise ((resolve, rejetc) => {
+                
+            })        
+    }
 }

@@ -25,8 +25,11 @@ class NegociacaoController {
             .then(dao => dao.listaTodos())
             .then(negociacoes => 
                 negociacoes.forEach(negociacao => 
-                    this._listaNegociacoes.adiciona(negociacao)));
-
+                    this._listaNegociacoes.adiciona(negociacao)))
+                .catch(erro =>  {
+                        console.log(erro);
+                        this._mensagem.texto = error;
+                });
     }
 
     apaga(){
