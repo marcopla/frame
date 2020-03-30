@@ -17,22 +17,17 @@ class NegociacaoController {
             new MensagemView($('#mensagemView')),
             'texto');
 
-            this._ordemAtual = '';
+        this._ordemAtual = '';
 
-            ConnectionFactory
-                .getConnection()
-                .then(connection => {
+        ConnectionFactory
+            .getConnection()
+            .then(connection => new Negociacao(connection)
+            .then(dao => dao.listaTodos())
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao))
+            }}
 
-                    new NegociacaoDao(connection)  
-                    .listaTodos()
-                    .then(negociacoes => {
-                            negociacoes.forEach(negociacao => {
-                                this._listaNegociacoes.adiciona(negociacao);
-                            })
-
-                    });
-                });
-            
+       
     }
 
     apaga(){
