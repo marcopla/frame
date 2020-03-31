@@ -68,6 +68,7 @@ class NegociacaoDao {
     }
 
     apagaTodos() {
+        
         return new Promise ((resolve, rejetc) => {
             
             let request = this._connection
